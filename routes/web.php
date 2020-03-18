@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+    // admin section
+Route::get('/admin',function(){
+    return view('admin.welcome');
+});    
+// end of admin section
