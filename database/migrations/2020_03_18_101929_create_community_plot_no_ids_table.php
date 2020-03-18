@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHomeTypesTable extends Migration
+class CreateCommunityPlotNoIdsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateHomeTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('home_types', function (Blueprint $table) {
+        Schema::create('community_plot_no_ids', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('type');
+            $table->integer('community_id');
+            $table->integer('plot_no_id');
+            $table->integer('plot_Id_id');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateHomeTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('home_types');
+        Schema::dropIfExists('community_plot_no_ids');
     }
 }
