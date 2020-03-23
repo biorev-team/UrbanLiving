@@ -1,4 +1,4 @@
-@extends('layouts.welcome')
+@extends('layouts.admin')
     @section('content')
         <form action="post">
             <div class="row">
