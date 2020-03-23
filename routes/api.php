@@ -17,5 +17,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::resources([
-    'page' => 'Admin\PageController'
+    'page'              => 'Admin\PageController',
+    'admin/home'        => 'Admin\HomeController',
+    'admin/community'   => 'Admin\CommunityController'
 ]);
+Route::post('admin/home/{id}','admin\HomeController@update');
+Route::post('admin/community/{id}','admin\CommunityController@update');

@@ -22,6 +22,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- include summernote css/js -->
   <link href="{{asset('summernote/summernote.min.css')}}" rel="stylesheet">
   @endif
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">

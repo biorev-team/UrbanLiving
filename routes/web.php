@@ -24,6 +24,21 @@ Route::get('/admin/pages',function(){
 Route::get('/admin/pages/edit/{id}',function(){
     return view('admin.edit');
 })->name('edit-page');
+Route::get('/homes', function () {
+    return view('admin.homes.homes');
+});
+
+Route::get('/edit_homes', function () {
+    return view('admin.homes.edit_homes');
+});
+
+Route::get('/undercons', function () {
+    return view('admin.undercons');
+});
+
+Route::get('/availsold', function () {
+    return view('admin.availsold');
+});
 // end of admin section
 Auth::routes();
 
