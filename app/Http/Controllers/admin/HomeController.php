@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Homes;
 use App\Models\Communities;
+use App\Models\HomeCommunity;
 
 class HomeController extends Controller
 {
@@ -83,18 +84,18 @@ class HomeController extends Controller
         Communities::create([
             'title'=>$request['com_title'],
             'address'=>$request['address'],
-            'area'=>$request['area'],
+            'area'=>$request['com_area'],
             'subdivission'=>$request['subdivission'],
             'city'=>$request['city'],
             'county'=>$request['county'],
             'state'=>$request['state'],
             'zipcode'=>$request['zipcode'],
         ]);
-        $home=Homes::where('title',$request['title']);
-        $community=Communities::where('title',$request['com_title']);
+        $home=Homes::where('title',$request['title'])->first();
+        $community=Communities::where('title',$request['com_title'])->first();
         HomeCommunity::create([
             'home_id'=>$home->id,
-            'community_id'=>$home->id,
+            'community_id'=>$community->id,
         ]);
         
     }
@@ -185,10 +186,11 @@ class HomeController extends Controller
             'meta_description'=>$request['meta_description'],
             'meta_title'=>$request['meta_title'],
         ]);
-        Communities::where('id',$id)->update([
-            'title'=>$request['title'],
+        $data=HomeCommunity::where('home_id',$id)->first();
+        Communities::where('id',$data->community_id)->update([
+            'title'=>$request['com_title'],
             'address'=>$request['address'],
-            'area'=>$request['area'],
+            'area'=>$request['com_area'],
             'subdivission'=>$request['subdivission'],
             'city'=>$request['city'],
             'county'=>$request['county'],
@@ -204,7 +206,7 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    {  
         //
     }
 }
