@@ -10,13 +10,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
   <title>Urban Living</title>
-
+  <!-- custom style sheet -->
+  <link rel="stylesheet" href="/css/style.css" class="rel">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="/dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  @if(Route::currentRouteName() == 'edit-page') 
+  <!-- include summernote css/js -->
+  <link href="{{asset('summernote/summernote.min.css')}}" rel="stylesheet">
+  @endif
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -147,7 +152,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+      <img src="dist/img/AdminLTELogo.png" alt=" Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">Urban Living</span>
     </a>
@@ -176,7 +181,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                 </li>
                 <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link "><i class="nav-icon fas fa-copy"></i>
+                    <a href="/admin/pages" class="nav-link "><i class="nav-icon fas fa-copy"></i>
                     <p> Pages</p>
                     </a>
                 </li>
@@ -192,6 +197,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
+          @yield('content')
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
@@ -228,5 +234,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/dist/js/adminlte.min.js"></script>
+<!-- include summernote css/js -->
+@if(Route::currentRouteName() == 'edit-page')
+<script src="/summernote/summernote.min.js"></script>
+<script>
+  $(document).ready(function() {
+  $('#summernote').summernote();
+});
+</script>
+@endif
+@if(Route::currentRouteName() == 'pages')
+<script>
+  var APP_URL = "{{ url('/') }}";
+  loadPagesList(); 
+  function loadPagesList(){
+  $.ajax({
+        type: 'GET',
+        url: APP_URL+'/api/page',
+        success: function(result){
+        $('#pages_list').html(result);
+        }   
+    });
+}
+</script>     
+@endif
 </body>
 </html>

@@ -16,6 +16,15 @@ Route::get('/', function () {
 });
     // admin section
 Route::get('/admin',function(){
-    return view('admin.welcome');
+    return view('admin.dashboard');
 });    
+Route::get('/admin/pages',function(){
+    return view('admin.page');
+})->name('pages'); 
+Route::get('/admin/pages/edit/{id}',function(){
+    return view('admin.edit');
+})->name('edit-page');
 // end of admin section
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
