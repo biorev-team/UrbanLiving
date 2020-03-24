@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Pages;
+use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
@@ -40,6 +41,30 @@ class PageController extends Controller
     public function store(Request $request)
     {
         //
+        $slug         =  str_slug($request['title'],'-');
+        $featured_img =  Str::slug($request['title'], '-').time().explode('.',$request['featured-image-name'])[0].'.' . explode('/', explode(':',substr($request['featured-image'],0,strpos(
+            $request['featured-image'],';')))[1])[1];  
+
+        \Image::make($request['featured-image'])->save(public_path('uploads\featuredImages\\').$featured_img);
+        if (Pages::create([
+            'title'             => $request['title'],
+            'meta_title'        => $request['meta-title'],
+            'meta_description'  => $request['meta-des'],
+            'description'       => $request['editordata'],
+            'slug'              => $slug,
+            'featured_image'    => $featured_img,
+            'type'              => 0,
+            'relative_id'       => 0
+        ])
+        )
+        {
+            return ["success"];
+        }
+        else
+        {
+            return ["something went wrong"];
+        }
+
     }
 
     /**
@@ -51,6 +76,8 @@ class PageController extends Controller
     public function show($id)
     {
         //
+        return Pages::where('id',$id)->get()->first();
+
     }
 
     /**

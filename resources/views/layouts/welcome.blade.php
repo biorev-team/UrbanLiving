@@ -240,22 +240,75 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="/summernote/summernote.min.js"></script>
 <script>
   $(document).ready(function() {
-  $('#summernote').summernote();
-});
+      var image,image_name;
+      var APP_URL = "{{ url('/') }}";
+      var id = window.location.href.split('/').pop();
+      $.ajax({
+          type: 'GET',
+          url: APP_URL+'/api/page/'+id,
+          success: function(result){
+            console.log(result.title);
+            document.getElementById("title").value        = result.title;
+            document.getElementById("meta_title").value   = result.meta_title;
+            document.getElementById("meta_des").value     = result.meta_description;
+            $('#summernote').summernote('code',result.description);
+            $('#chosen_feature_img').attr('src','/'+result.featured_image);
+          }   
+        });
+       $('input[type=file]').on('change',function(e){
+            let files = e.target.files[0];
+            let reader = new FileReader();
+            if(files){
+              reader.onloadend = ()=>{
+                $('#chosen_feature_img').attr('src',reader.result);
+                image = reader.result;
+                image_name = files.name;
+               // document.getElementById("featured_img").value  = reader.result;
+              }
+              reader.readAsDataURL(files); 
+          }
+        });
+        $(function () {
+          $('form').on('submit', function (e) {
+            var title,meta_title,meta_des
+            e.preventDefault();
+                title            =  document.getElementById("title").value;         
+                meta_title       =  document.getElementById("meta_title").value;   
+                meta_des         =  document.getElementById("meta_des").value;
+                $.ajax({
+                  type: 'post',
+                  url: '/api/page',
+                  data:{
+                    'title'               : title,
+                    'meta-title'          : meta_title,
+                    'meta-des'            : meta_des,
+                    'featured-image'      : image,
+                    'featured-image-name' : image_name,
+                    'editordata'    : $('#summernote').summernote('code')
+                  },
+                  success: function () {
+                    
+                  }
+                });
+
+          });
+
+      });
+    });
 </script>
 @endif
 @if(Route::currentRouteName() == 'pages')
 <script>
-  var APP_URL = "{{ url('/') }}";
-  loadPagesList(); 
-  function loadPagesList(){
-  $.ajax({
-        type: 'GET',
-        url: APP_URL+'/api/page',
-        success: function(result){
-        $('#pages_list').html(result);
-        }   
-    });
+    var APP_URL = "{{ url('/') }}";
+    loadPagesList(); 
+    function loadPagesList(){
+    $.ajax({
+          type: 'GET',
+          url: APP_URL+'/api/page',
+          success: function(result){
+          $('#pages_list').html(result);
+          }   
+      });
 }
 </script>     
 @endif
