@@ -176,18 +176,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
                 <li class="nav-item has-treeview menu-open">
-                    <a href="#" class="nav-link active">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>Dashboard</p>
-                    </a>
+                  <a href="#" class="nav-link active">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p> Dashboard</p>
+                  </a>
                 </li>
+                <li class="nav-item">
+                  <a href="/admin/homes" class="nav-link">
+                    <i class="fas fa-home"></i><span><p> Homes</p></span>
+                  </a>
+                </li>
+              
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="fas fa-terminal"></i><span><p> Floor</p></span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="fas fa-square"></i><span><p> Components</p></span>
+                  </a>
+                </li> 
                 <li class="nav-item has-treeview">
-                    <a href="/admin/pages" class="nav-link "><i class="nav-icon fas fa-copy"></i>
+                  <a href="/admin/pages" class="nav-link "><i class="nav-icon fas fa-copy"></i>
                     <p> Pages</p>
-                    </a>
+                  </a>
                 </li>
-            </ul>
-        </nav>
+             </ul>
+          </nav>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
@@ -297,6 +313,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
     });
 </script>
 @endif
+@if(Route::currentRouteName() == 'edit-home')
+<script>
+$(document).ready(function() {
+  var APP_URL = "{{ url('/') }}";
+  var id = window.location.href.split('/').pop();
+  $.ajax({
+      type: 'GET',
+      url: APP_URL+'/api/admin/home/'+id,
+      
+      success: function(result){
+        document.getElementById("title").value = result.title;
+        document.getElementById("description").value = result.description;
+        document.getElementById("bedroom").value = result.bedroom;
+        document.getElementById("bathroom").value = result.bathroom;
+        document.getElementById("garage").value = result.garage;
+        document.getElementById("stories").value = result.stories;
+        document.getElementById("mls").value = result.mls;
+        document.getElementById("area").value = result.area;
+        document.getElementById("builder").value = result.builder;
+        document.getElementById("meta_title").value = result.meta_title;
+        document.getElementById("meta_description").value = result.meta_description;
+      }
+      
+    }); 
+});
+</script>
+@endif
 @if(Route::currentRouteName() == 'pages')
 <script>
     var APP_URL = "{{ url('/') }}";
@@ -309,7 +352,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
           $('#pages_list').html(result);
           }   
       });
-}
+}   
+function deleteHome(id)
+  {       $.ajax({
+          url: APP_URL + '/api/admin/home/'+ id,
+          type: 'DELETE'
+        });
+  }
+  function deleteCommunity(id)
+  {         $.ajax({
+            url: APP_URL + '/api/admin/community/'+ id,
+            type: 'DELETE',
+        });
+  }
 </script>     
 @endif
 </body>

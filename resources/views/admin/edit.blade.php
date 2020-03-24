@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.welcome')
     @section('content')
         <form>
             <div class="row">

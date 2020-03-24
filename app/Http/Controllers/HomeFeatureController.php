@@ -24,12 +24,10 @@ class HomeFeatureController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $name = $image->getClientOriginalName();
-            $destinationPath = public_path('uploads');
-            $image->move($destinationPath, $name);
-        }
+        $featured_img = time().explode('.',$request['featured-image-name'])[0].'.' . explode('/', explode(':',substr($request['image'],0,strpos(
+            $request['image'],';')))[1])[1];  
+
+        \Image::make($request['image'])->save(public_path('uploads\featuredImages\homeFeatures\\').$featured_img);
         $this->validate($request,[
             'title'=>'required',
             'home_id'=>'required'
@@ -37,7 +35,7 @@ class HomeFeatureController extends Controller
         Features::create([
             'home_id'=>$request['home_id'],
             'title'=>$request['title'],
-             'image'=>$image,
+             'image'=>$featured_img,
         ]);
 
     }
