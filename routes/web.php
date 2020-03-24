@@ -24,13 +24,16 @@ Route::get('/admin/pages',function(){
 Route::get('/admin/pages/edit/{id}',function(){
     return view('admin.edit');
 })->name('edit-page');
-Route::get('/homes', function () {
-    return view('admin.homes.homes');
-});
 
-Route::get('/edit_homes', function () {
+
+
+Route::get('admin/homes','Admin\HomeController@index');
+
+Route::get('admin/home/edit/{id}', function(){
     return view('admin.homes.edit_homes');
-});
+})->name('edit-home');
+
+
 
 Route::get('/undercons', function () {
     return view('admin.undercons');

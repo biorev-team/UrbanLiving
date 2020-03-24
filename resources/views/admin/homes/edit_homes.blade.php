@@ -1,4 +1,4 @@
-@extends('layouts.welcome')
+@extends('layouts.admin')
 @section('content')
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,40 +53,41 @@
 </div>
 <div id="homes" class="tabcontent">
 <form>
+  
     <div class="form-group">
       <label for="inputTitle">Title</label>
-      <input type="text" class="form-control" id="inputTitle" placeholder="title">
+    <input type="text" class="form-control" id="title" name ="title"  >
     </div>
   <div class="form-group">
     <label for="inputDescription">Description</label>
-    <input type="text" class="form-control" id="inputDescription" placeholder="Description">
+    <input type="text" class="form-control" id="description"    >
   </div>
   <div class="form-row">
   <div class="form-group col-md-4">
     <label for="inputBedroom">Bedroom</label>
-    <input type="text" class="form-control" id="inputBedroom" placeholder="2">
+    <input type="text" class="form-control" id="bedroom"   >
   </div>
   <div class="form-group col-md-4">
     <label for="inputBathroom">bathroom</label>
-    <input type="text" class="form-control" id="inputBathroom" placeholder="2">
+    <input type="text" class="form-control" id="bathroom"  >
   </div>
   <div class="form-group col-md-4">
     <label for="inputGarage">Garage</label>
-    <input type="text" class="form-control" id="inputGarage" placeholder="1">
+    <input type="text" class="form-control" id="garage"    >
   </div>
   </div>
   <div class="form-row">
   <div class="form-group col-md-4">
-    <label for="inputStories">Stories</label>
-    <input type="text" class="form-control" id="inputStories" placeholder="1">
+    <label for="stories">Stories</label>
+    <input type="text" class="form-control" id="stories"    >
   </div>
   <div class="form-group col-md-4">
-    <label for="inputMls">Mls</label>
-    <input type="text" class="form-control" id="inputMls" placeholder="1">
+    <label for="mls">Mls</label>
+    <input type="text" class="form-control" id="mls"  >
   </div>
   <div class="form-group col-md-4">
-    <label for="inputArea">Area</label>
-    <input type="text" class="form-control" id="inputArea" placeholder="Apun ka Area">
+    <label for="area">Area</label>
+    <input type="text" class="form-control" id="area"   >
   </div>
   </div>
 <div class="row">
@@ -101,80 +102,68 @@
 <div class="col-md-6">
 <div class="image-upload">
 <p>Image Gallery</p>
-  <!-- <label for="file-input">
-    <img src="https://icon-library.net/images/upload-photo-icon/upload-photo-icon-21.jpg"/>
-  </label> -->
+   
   <input type="file" id="files" name="files[]" multiple />
 <output id="list"></output>
   </div>
 </div>
 </div>
-  <br><br>
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="inputCity">Builder</label>
-      <input type="text" class="form-control" id="inputCity">
+      <input type="text" class="form-control" id="builder"  >
     </div>
     <div class="form-group col-md-4">
     <label for="inputDescription">Meta Description</label>
-      <input type="text" class="form-control" id="inputDescription">
+      <input type="text" class="form-control" id="meta_description"  >
       </select>
     </div>
     <div class="form-group col-md-4">
       <label for="inputMetatitle">Meta Title</label>
-      <input type="text" class="form-control" id="inputMetatitle">
+      <input type="text" class="form-control" id="meta_title"  >
     </div>
   </div>
-  <div class="row">
-  <div class="col-md-2">
-  <button type="submit" class="btn btn-primary">Save</button>
-</div>
-<div class="col-md-2">
-  <button type="submit" class="btn btn-primary">Cancel</button>
-</div>
-</div>
-</form>
+  
 </div>
 
 <!-- Modal -->
 <div id="communities" class="tabcontent">
-<form>
-<div class="form-group">
+ <div class="form-group">
       <label for="inputEmail4">Title</label>
-      <input type="text" class="form-control" id="inputTitle" placeholder="title">
+      <input type="text" class="form-control" id="inputTitle"  >
     </div>
   <div class="form-group">
     <label for="inputAddress">Address</label>
-    <input type="text" class="form-control" id="inputAddress" placeholder="Address">
+    <input type="text" class="form-control" id="inputAddress"   >
   </div>
 
   <div class="form-row">
   <div class="form-group col-md-6">
     <label for="inputArea">Area</label>
-    <input type="text" class="form-control" id="inputArea" placeholder="Apun ka Area">
+    <input type="text" class="form-control" id="inputArea"   >
   </div>
   <div class="form-group col-md-4">
     <label for="inputDivision">Subdivision</label>
-    <input type="text" class="form-control" id="inputDivision" placeholder="Subdivision">
+    <input type="text" class="form-control" id="inputDivision"  >
   </div>
   </div>
 
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputCity">City</label>
-      <input type="text" class="form-control" id="inputCity">
+      <input type="text" class="form-control" id="inputCity"  >
     </div>
     <div class="form-group col-md-4">
       <label for="inputState">Country</label>
       <select id="inputState" class="form-control">
-        <option selected>Choose...</option>
+        <option selected></option>
         <option>India</option>
         <option>USA</option>
       </select>
     </div>
     <div class="form-group col-md-2">
       <label for="inputZip">Zip</label>
-      <input type="text" class="form-control" id="inputZip">
+      <input type="text" class="form-control" id="inputZip"  >
     </div>
   </div>
 </form>

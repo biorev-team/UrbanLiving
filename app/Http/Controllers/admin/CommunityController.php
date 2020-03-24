@@ -15,7 +15,7 @@ class CommunityController extends Controller
      */
     public function index()
     {
-        return Communities::get();
+        //
     }
 
     /**
@@ -26,16 +26,6 @@ class CommunityController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'title'=>'required',
-            'address'=>'required',
-            'area'=>'required',
-            'subdivission'=>'required',
-            'city'=>'required',
-            'county'=>'required',
-            'state'=>'required',
-            'zipcode'=>'required'
-            ]);
         Communities::create([
             'title'=>$request['title'],
             'address'=>$request['address'],
@@ -56,7 +46,7 @@ class CommunityController extends Controller
      */
     public function show($id)
     {
-        //
+        return Communities::where('id',$id)->get()->first();
     }
 
     /**
@@ -67,28 +57,17 @@ class CommunityController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {  
-        $this->validate($request,[
-            'title'=>'required',
-            'address'=>'required',
-            'area'=>'required',
-            'subdivission'=>'required',
-            'city'=>'required',
-            'county'=>'required',
-            'state'=>'required',
-            'zipcode'=>'required'
-            ]);
+    {
         Communities::where('id',$id)->update([
-            'title'=>$request['title'],
+            'title'=>$request['com_title'],
             'address'=>$request['address'],
-            'area'=>$request['area'],
+            'area'=>$request['com_area'],
             'subdivission'=>$request['subdivission'],
             'city'=>$request['city'],
             'county'=>$request['county'],
             'state'=>$request['state'],
             'zipcode'=>$request['zipcode'],
         ]);
-        return ['success'];
     }
 
     /**
@@ -99,6 +78,7 @@ class CommunityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $community = Communities::findOrFail($id);
+        $community->delete(); 
     }
 }
