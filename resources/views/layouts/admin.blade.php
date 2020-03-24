@@ -196,7 +196,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/homes" class="nav-link">
+                <a href="/admin/homes" class="nav-link">
                 <i class="fa fa-home"></i><span><p>Homes</p></span>
                 </a>
               </li>
@@ -275,12 +275,61 @@
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-
 <!-- jQuery -->
-<script src="/bower_components/admin-lte/plugins/jquery/jquery.min.js"></script>
+<script src="/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="/bower_components/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="/bower_components/admin-lte/dist/js/adminlte.min.js"></script>
+<script src="/dist/js/adminlte.min.js"></script>
+@if(Route::currentRouteName() == 'edit-home')
+<script>
+$(document).ready(function() {
+  var APP_URL = "{{ url('/') }}";
+  var id = window.location.href.split('/').pop();
+  $.ajax({
+      type: 'GET',
+      url: APP_URL+'/api/admin/home/'+id,
+      
+      success: function(result){
+        document.getElementById("title").value = result.title;
+        document.getElementById("description").value = result.description;
+        document.getElementById("bedroom").value = result.bedroom;
+        document.getElementById("bathroom").value = result.bathroom;
+        document.getElementById("garage").value = result.garage;
+        document.getElementById("stories").value = result.stories;
+        document.getElementById("mls").value = result.mls;
+        document.getElementById("area").value = result.area;
+        document.getElementById("builder").value = result.builder;
+        document.getElementById("meta_title").value = result.meta_title;
+        document.getElementById("meta_description").value = result.meta_description;
+      }
+      
+    }); 
+});
+</script>
+@endif
+<script>
+  var APP_URL = "{{ url('/') }}";
+  function deleteHome(id)
+  {
+    
+  
+            url: APP_URL + '/api/admin/home/'+ id,
+            type: 'DELETE',
+        });
+  }
+  function deleteCommunity(id)
+  {
+            url: APP_URL + '/api/admin/community/'+ id,
+            type: 'DELETE',
+        });
+  }
+  function deleteHomeFeature(id)
+  {
+            url: APP_URL + '/api/admin/community/'+ id,
+            type: 'DELETE',
+        });
+  }
+</script>
 </body>
 </html>

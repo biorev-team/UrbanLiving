@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\admin;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\Request;                        
 use App\Http\Controllers\Controller;
 use App\Models\Homes;
-use App\Models\Communities;
 use App\Models\HomeCommunity;
 
 class HomeController extends Controller
@@ -17,7 +16,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //
+        $homes=Homes::get();
+        return view('admin.homes.homes')->with('homes',$homes);
     }
 
     /**
@@ -81,18 +81,9 @@ class HomeController extends Controller
             'meta_description'=>$request['meta_description'],
             'meta_title'=>$request['meta_title'],
         ]);
-        Communities::create([
-            'title'=>$request['com_title'],
-            'address'=>$request['address'],
-            'area'=>$request['com_area'],
-            'subdivission'=>$request['subdivission'],
-            'city'=>$request['city'],
-            'county'=>$request['county'],
-            'state'=>$request['state'],
-            'zipcode'=>$request['zipcode'],
-        ]);
-        $home=Homes::where('title',$request['title'])->first();
-        $community=Communities::where('title',$request['com_title'])->first();
+        
+        $community=Communities::where('title',$request['community'])->first();
+        $community=Home::where('title',$request['title'])->first();
         HomeCommunity::create([
             'home_id'=>$home->id,
             'community_id'=>$community->id,
@@ -108,8 +99,10 @@ class HomeController extends Controller
      */
     public function show($id)
     {
-        //
+       return Homes::where('id',$id)->get()->first();
     }
+
+    
 
     /**
      * Update the specified resource in storage.
@@ -186,17 +179,12 @@ class HomeController extends Controller
             'meta_description'=>$request['meta_description'],
             'meta_title'=>$request['meta_title'],
         ]);
-        $data=HomeCommunity::where('home_id',$id)->first();
-        Communities::where('id',$data->community_id)->update([
-            'title'=>$request['com_title'],
-            'address'=>$request['address'],
-            'area'=>$request['com_area'],
-            'subdivission'=>$request['subdivission'],
-            'city'=>$request['city'],
-            'county'=>$request['county'],
-            'state'=>$request['state'],
-            'zipcode'=>$request['zipcode'],
+        $community=Communities::where('title',$request['community'])->first();
+        HomeCommunity::where('home_id',$id)->update([
+            'home_id'=>$id,
+            'community_id'=>$community->id,
         ]);
+      
     }
 
     /**
@@ -207,6 +195,7 @@ class HomeController extends Controller
      */
     public function destroy($id)
     {  
-        //
+        $home = Homes::findOrFail($id);
+        $home->delete(); 
     }
 }
