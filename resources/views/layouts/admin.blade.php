@@ -311,15 +311,13 @@ $(document).ready(function() {
 <script>
   var APP_URL = "{{ url('/') }}";
   function deleteHome(id)
-  {
-    
-  
-            url: APP_URL + '/api/admin/home/'+ id,
-            type: 'DELETE',
+  {       $.ajax({
+          url: APP_URL + '/api/admin/home/'+ id,
+          type: 'DELETE'
         });
   }
   function deleteCommunity(id)
-  {
+  {         $.ajax({
             url: APP_URL + '/api/admin/community/'+ id,
             type: 'DELETE',
         });

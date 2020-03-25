@@ -29,13 +29,10 @@ class HomeController extends Controller
     public function store(Request $request)
     {
         $gallery=[];
-        if ($request->hasFile('featured_image')) {
-            $featured_image = $request->file('featured_image');
-            $name = $featured_image->getClientOriginalName();
-            $size = $featured_image->getClientSize();
-            $destinationPath = public_path('uploads');
-            $featured_image->move($destinationPath, $name);
-        }
+        $featured_img =  Str::slug($request['title'], '-').time().explode('.',$request['featured-image-name'])[0].'.' . explode('/', explode(':',substr($request['featured-image'],0,strpos(
+            $request['featured-image'],';')))[1])[1];  
+
+        \Image::make($request['featured-image'])->save(public_path('uploads\featuredImages\homes\\').$featured_img);
         $files = $request->file('gallery');
         foreach($files as $file)
         {
@@ -75,7 +72,7 @@ class HomeController extends Controller
             'mls'=>$request['mls'],
             'builder'=>$request['builder'],
             'area'=>$request['area'],
-            'featured_image'=>$name,
+            'featured_image'=>$featured_img,
             'gallery'=>implode(',', $gallery),
             'slug'=>$request['slug'],
             'meta_description'=>$request['meta_description'],
