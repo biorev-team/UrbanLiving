@@ -1,4 +1,4 @@
-@extends('layouts.welcome')
+@extends('layouts.admin')
 @section('content')
       <div class="d-sm-flex align-items-center justify-content-between mb-2">
          <h4 class="a_dash">Admin Dashboard</h4>

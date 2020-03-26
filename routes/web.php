@@ -27,13 +27,24 @@ Route::get('/admin/pages/edit/{id}',function(){
 
 
 
-Route::get('admin/homes','Admin\HomeController@index');
+Route::get('admin/homes',function(){
+    return view('admin.homes.index');
+})->name('homes');
 
 Route::get('admin/home/edit/{id}', function(){
-    return view('admin.homes.edit_homes');
+    return view('admin.homes.homeForm');
 })->name('edit-home');
+Route::get('admin/home/manage/{id}', function(){
+    return view('admin.homes.manage_homes');
+})->name('manage-home');
+Route::get('admin/home/create', function(){
+    return view('admin.homes.homeForm');
+})->name('create-home');
 
 
+Route::get('admin/community',function(){
+    return view('admin.communities.index');
+})->name('communities');
 
 Route::get('/undercons', function () {
     return view('admin.undercons');
@@ -42,6 +53,12 @@ Route::get('/undercons', function () {
 Route::get('/availsold', function () {
     return view('admin.availsold');
 });
+
+
+Route::get( 'admin/home/manage/{id}', 'admin\HomeFeatureController@index');
+Route::post( 'admin/home/feature', 'admin\HomeFeatureController@store')->name('feature-create');
+
+
 // end of admin section
 Auth::routes();
 

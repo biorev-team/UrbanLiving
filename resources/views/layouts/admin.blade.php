@@ -200,14 +200,21 @@
                 <i class="fa fa-home"></i><span><p>Homes</p></span>
                 </a>
               </li>
+
+              <li class="nav-item">
+                <a href="/admin/community" class="nav-link">
+                <i class="fa fa-home"></i><span><p>Communities</p></span>
+                </a>
+              </li>
               
               <li class="nav-item">
                 <a href="#" class="nav-link">
                 <i class="fa fa-terminal"></i><span><p>Floor</p></span>
                 </a>
               </li>
+
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/components" class="nav-link">
                 <i class="fa fa-square"></i><span><p>Components</p></span>
                 </a>
               </li>
@@ -275,13 +282,76 @@
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
+
 <!-- jQuery -->
 <script src="/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/dist/js/adminlte.min.js"></script>
-@if(Route::currentRouteName() == 'edit-home')
+
+@if(Route::currentRouteName() == 'edit-page')
+<script src="/summernote/summernote.min.js"></script>
+<script>
+  $(document).ready(function() {
+      var image,image_name;
+      var APP_URL = "{{ url('/') }}";
+      var id = window.location.href.split('/').pop();
+      $.ajax({
+          type: 'GET',
+          url: APP_URL+'/api/page/'+id,
+          success: function(result){
+            console.log(result.title);
+            document.getElementById("title").value        = result.title;
+            document.getElementById("meta_title").value   = result.meta_title;
+            document.getElementById("meta_des").value     = result.meta_description;
+            $('#summernote').summernote('code',result.description);
+            $('#chosen_feature_img').attr('src','/'+result.featured_image);
+          }   
+        });
+       $('input[type=file]').on('change',function(e){
+            let files = e.target.files[0];
+            let reader = new FileReader();
+            if(files){
+              reader.onloadend = ()=>{
+                $('#chosen_feature_img').attr('src',reader.result);
+                image = reader.result;
+                image_name = files.name;
+               // document.getElementById("featured_img").value  = reader.result;
+              }
+              reader.readAsDataURL(files); 
+          }
+        });
+        $(function () {
+          $('form').on('submit', function (e) {
+            var title,meta_title,meta_des
+            e.preventDefault();
+                title            =  document.getElementById("title").value;         
+                meta_title       =  document.getElementById("meta_title").value;   
+                meta_des         =  document.getElementById("meta_des").value;
+                $.ajax({
+                  type: 'post',
+                  url: '/api/page',
+                  data:{
+                    'title'               : title,
+                    'meta-title'          : meta_title,
+                    'meta-des'            : meta_des,
+                    'featured-image'      : image,
+                    'featured-image-name' : image_name,
+                    'editordata'    : $('#summernote').summernote('code')
+                  },
+                  success: function () {
+                    
+                  }
+                });
+
+          });
+
+      });
+    });
+</script>
+@endif
+@if(Route::currentRouteName() == 'edit-home' )
 <script>
 $(document).ready(function() {
   var APP_URL = "{{ url('/') }}";
@@ -289,8 +359,8 @@ $(document).ready(function() {
   $.ajax({
       type: 'GET',
       url: APP_URL+'/api/admin/home/'+id,
-      
-      success: function(result){
+
+      success: function(result){     
         document.getElementById("title").value = result.title;
         document.getElementById("description").value = result.description;
         document.getElementById("bedroom").value = result.bedroom;
@@ -305,29 +375,317 @@ $(document).ready(function() {
       }
       
     }); 
+    $('input[type=file]').on('change',function(e){
+            let files = e.target.files[0];
+            let reader = new FileReader();
+            if(files){
+              reader.onloadend = ()=>{
+                $('#chosen_feature_img').attr('src',reader.result);
+                image = reader.result;
+                image_name = files.name;
+               // document.getElementById("featured_img").value  = reader.result;
+              }
+              reader.readAsDataURL(files); 
+          }
+        });
+        $(function () {
+          $('form').on('submit', function (e) {
+            var title,description,bedroom,bathroom,garage,stories,mls,area,builder,meta_description,meta_title;
+            e.preventDefault();
+                title            =  document.getElementById("title").value;         
+                description            =  document.getElementById("description").value;         
+                bedroom            =  document.getElementById("bedroom").value;         
+                bathroom            =  document.getElementById("bathroom").value;         
+                garage            =  document.getElementById("garage").value;         
+                stories            =  document.getElementById("stories").value;         
+                mls            =  document.getElementById("mls").value;         
+                area            =  document.getElementById("area").value;         
+                builder            =  document.getElementById("builder").value;         
+                meta_description            =  document.getElementById("meta_description").value;         
+                meta_title            =  document.getElementById("meta_title").value;         
+                $.ajax({
+                  type: 'post',
+                  url: '/api/admin/home/'+id,
+                  data:{
+                    'title'               : title,
+                    'description'         : description,
+                    'bedroom'             : bedroom,
+                    'bathroom'            : bathroom,
+                    'garage'              : garage,
+                    'stories'             : stories,
+                    'mls'                 : mls,
+                    'area'                : area,
+                    'builder'             : builder,
+                    'meta-title'          : meta_title,
+                    'meta-description'    : meta_description,
+                    'featured-image'      : image,
+                    'featured-image-name' : image_name,
+                  },
+                  success: function () {
+                    
+                  }
+                });
+
+          });
+
+      });
 });
 </script>
 @endif
+@if(Route::currentRouteName() == 'create-home' )
 <script>
+$(document).ready(function() {
   var APP_URL = "{{ url('/') }}";
-  function deleteHome(id)
-  {       $.ajax({
-          url: APP_URL + '/api/admin/home/'+ id,
-          type: 'DELETE'
+  var id = window.location.href.split('/').pop();
+  
+    $('input[type=file]').on('change',function(e){
+            let files = e.target.files[0];
+            let reader = new FileReader();
+            if(files){
+              reader.onloadend = ()=>{
+                $('#chosen_feature_img').attr('src',reader.result);
+                image = reader.result;
+                image_name = files.name;
+               // document.getElementById("featured_img").value  = reader.result;
+              }
+              reader.readAsDataURL(files); 
+          }
         });
-  }
-  function deleteCommunity(id)
-  {         $.ajax({
-            url: APP_URL + '/api/admin/community/'+ id,
-            type: 'DELETE',
-        });
-  }
-  function deleteHomeFeature(id)
-  {
-            url: APP_URL + '/api/admin/community/'+ id,
-            type: 'DELETE',
-        });
-  }
+        $(function () {
+          $('form').on('submit', function (e) {
+            var title,description,bedroom,bathroom,garage,stories,mls,area,builder,meta_description,meta_title;
+            e.preventDefault();
+                title            =  document.getElementById("title").value;         
+                description            =  document.getElementById("description").value;         
+                bedroom            =  document.getElementById("bedroom").value;         
+                bathroom            =  document.getElementById("bathroom").value;         
+                garage            =  document.getElementById("garage").value;         
+                stories            =  document.getElementById("stories").value;         
+                mls            =  document.getElementById("mls").value;         
+                area            =  document.getElementById("area").value;         
+                builder            =  document.getElementById("builder").value;         
+                meta_description            =  document.getElementById("meta_description").value;         
+                meta_title            =  document.getElementById("meta_title").value;         
+                $.ajax({
+                  type: 'post',
+                  url: '/api/admin/home/',
+                  data:{
+                    'title'               : title,
+                    'description'         : description,
+                    'bedroom'             : bedroom,
+                    'bathroom'            : bathroom,
+                    'garage'              : garage,
+                    'stories'             : stories,
+                    'mls'                 : mls,
+                    'area'                : area,
+                    'builder'             : builder,
+                    'meta-title'          : meta_title,
+                    'meta-description'    : meta_description,
+                    'featured-image'      : image,
+                    'featured-image-name' : image_name,
+                  },
+                  success: function () {
+                    
+                  }
+                });
+
+          });
+
+      });
+});
 </script>
+@endif
+@if(Route::currentRouteName() =='manage-home')
+<script>
+  $(document).ready(function() {
+    var APP_URL = "{{ url('/') }}";
+    var id = window.location.href.split('/').pop();
+   
+    $.ajax({
+        type: 'GET',
+        url: APP_URL+'/api/admin/home/'+id,
+  
+        success: function(result){     
+          document.getElementById("title").innerHTML = result.title;
+          document.getElementById("description").innerHTML = result.description;
+          document.getElementById("area").innerHTML = result.area;
+          document.getElementById("builder").innerHTML = result.builder;
+        }
+        
+      }); 
+  });
+  </script>
+  @endif
+<script>
+    var APP_URL = "{{ url('/') }}";
+    loadPagesList(); 
+    function loadPagesList(){
+    $.ajax({
+          type: 'GET',
+          url: APP_URL+'/api/page',
+          success: function(result){
+          $('#pages_list').html(result);
+          }   
+      });
+  } 
+</script> 
+@if(Route::currentRouteName() == 'homes')
+  <script>
+    var APP_URL = "{{ url('/') }}";
+    loadHomeList();
+      function loadHomeList(){
+    $.ajax({
+          type: 'GET',
+          url: APP_URL+'/api/admin/home',
+          success: function(result){   
+          $('#home_list').html(result);
+          }   
+      });
+  }  
+      function deleteHome(id)
+      {       $.ajax({
+              url: APP_URL + '/api/admin/home/'+ id,
+              type: 'DELETE'
+            });
+           loadHomeList();
+
+      }
+      
+ </script> 
+ @endif 
+
+ @if(Route::currentRouteName() == 'communities')
+  <script>
+    var APP_URL = "{{ url('/') }}";
+    var id = window.location.href.split('/').pop();
+    loadCommunityList();
+      function loadCommunityList(){
+    $.ajax({
+          type: 'GET',
+          url: APP_URL+'/api/admin/community',
+          success: function(result){
+          $('#community_list').html(result);
+          }   
+      });
+  }  
+       
+      function deleteCommunity(id)
+      {         $.ajax({
+                url: APP_URL + '/api/admin/community/'+ id,
+                type: 'DELETE',
+            });
+            loadCommunityList();
+      }
+
+      function editcommunity(cid)
+      {        
+        var APP_URL = "{{ url('/') }}";
+        var id = window.location.href.split('/').pop();
+        $.ajax({
+      type: 'GET',
+      url: APP_URL+'/api/admin/community/'+cid,
+
+      success: function(result){    
+        $('#communityModal').modal('show');
+
+        document.getElementById("title").value = result.title;
+        document.getElementById("address").value = result.address;
+        document.getElementById("area").value = result.area;
+        document.getElementById("subdivission").value = result.subdivission;
+        document.getElementById("city").value = result.city;
+        document.getElementById("state").value = result.state;
+        document.getElementById("country").value = result.county;
+        document.getElementById("area").value = result.area;
+        document.getElementById("zipcode").value = result.zipcode;
+      }
+      }); 
+      $(function () {
+          $('#Communityform').on('submit', function (e) {
+            var title,address,area,state,country,city,subdivission,zipcode;
+            e.preventDefault();
+                title            =  document.getElementById("title").value;         
+                address           =  document.getElementById("address").value;         
+                area             =  document.getElementById("area").value;         
+                city             =  document.getElementById("city").value;         
+                country     =  document.getElementById("country").value;         
+                subdivission     =  document.getElementById("subdivission").value;         
+                state     =  document.getElementById("state").value;         
+                zipcode          =  document.getElementById("zipcode").value;  
+                        
+
+                $.ajax({
+                  type: 'post',
+                  url: '/api/admin/community/'+cid,
+                  data:{
+                    'title'           : title,
+                    'address'         : address,
+                    'area'            : area,
+                    'city'            : city,
+                    'county'          : country,
+                    'subdivission'    : subdivission,
+                    'state'           : state,
+                    'zipcode'         : zipcode,
+                     
+                  },
+                  success: function () {
+                    $('#communityModal').modal('hide');
+                    loadCommunityList();
+                    
+                  }
+                });
+
+          });
+
+      });
+      }
+
+      function Addcommunity()
+      {        
+        $('#communityModal').modal('show');
+        var APP_URL = "{{ url('/') }}";
+        
+      $(function () {
+          $('#Communityform').on('submit', function (e) {
+            var title,address,area,state,country,city,subdivission,zipcode;
+            e.preventDefault();
+                title            =  document.getElementById("title").value;         
+                address           =  document.getElementById("address").value;         
+                area             =  document.getElementById("area").value;         
+                city             =  document.getElementById("city").value;         
+                country     =  document.getElementById("country").value;         
+                subdivission     =  document.getElementById("subdivission").value;         
+                state     =  document.getElementById("state").value;         
+                zipcode          =  document.getElementById("zipcode").value;  
+                        
+
+                $.ajax({
+                  type: 'post',
+                  url: '/api/admin/community/',
+                  data:{
+                    'title'           : title,
+                    'address'         : address,
+                    'area'            : area,
+                    'city'            : city,
+                    'county'          : country,
+                    'subdivission'    : subdivission,
+                    'state'    : state,
+                    'zipcode'         : zipcode,
+                     
+                  },
+                  success: function () {
+                    $('#communityModal').modal('reset');
+                    $('#communityModal').modal('hide');
+                    loadCommunityList();
+                  }
+                });
+
+          });
+
+      });
+    }
+ </script> 
+ @endif
+ 
+  
 </body>
 </html>

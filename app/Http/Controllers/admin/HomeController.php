@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Homes;
 use App\Models\HomeCommunity;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -16,9 +17,31 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $homes=Homes::get();
-        return view('admin.homes.homes')->with('homes',$homes);
+        $data ='';
+        $homes = Homes::all();
+        foreach($homes as $ky => $home )
+        {
+            $data .=' <div class="col-md-4" >
+            <div class="card">
+              <img class="card-img-top" src="/urbanliving/public/uploads/homes/'.$home->featured_image.'">
+              <div class="card-body">
+              <h5 class="card-title" style="font-size: 15px;">'.$home->title.'</h5>
+                 <br><br>
+                 <div class="row">
+                <div class="col-md-3">
+                <a type="button" href="/admin/home/manage/'.$home->id.'" style="font-size: 15px;" class="btn btn-success">Manage</a>
+                 </div>
+                 <div class="col-md-4">   
+                 <button type ="button" onclick="deleteHome('.$home->id.')" style="font-size: 15px;" class="btn btn-danger">Delete</button>
+                </div>
+                </div>
+                </div>
+            </div>
+          </div>';
+        } 
+        return $data ;
     }
+     
 
     /**
      * Store a newly created resource in storage.
@@ -28,19 +51,20 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        $gallery=[];
-        $featured_img =  Str::slug($request['title'], '-').time().explode('.',$request['featured-image-name'])[0].'.' . explode('/', explode(':',substr($request['featured-image'],0,strpos(
+        // $gallery=[];
+        $featured_img =  time().explode('.',$request['featured-image-name'])[0].'.' . explode('/', explode(':',substr($request['featured-image'],0,strpos(
             $request['featured-image'],';')))[1])[1];  
 
-        \Image::make($request['featured-image'])->save(public_path('uploads\featuredImages\homes\\').$featured_img);
-        $files = $request->file('gallery');
-        foreach($files as $file)
-        {
-            $extension = $file->getClientOriginalExtension(); 
-            $filename =time().'.'.$extension;
-            $file->move(public_path('uploads'), $filename);
-            array_push($gallery, $filename);
-        }
+        \Image::make($request['featured-image'])->save(public_path('uploads\homes\\').$featured_img);
+       
+        // $files = $request->file('gallery');
+        // foreach($files as $file)
+        // {
+        //     $extension = $file->getClientOriginalExtension(); 
+        //     $filename =time().'.'.$extension;
+        //     $file->move(public_path('uploads'), $filename);
+        //     array_push($gallery, $filename);
+        // }
         $this->validate($request,[
             'title'=>'required',
             'description'=>'required',
@@ -50,17 +74,8 @@ class HomeController extends Controller
             'stories'=>'required',
             'mls'=>'required',
             'area'=>'required',
-            'slug'=>'required',
-            'meta_description'=>'required',
-            'meta_title'=>'required',
-            'com_title'=>'required',
-            'address'=>'required',
-            'area'=>'required',
-            'subdivission'=>'required',
-            'city'=>'required',
-            'county'=>'required',
-            'state'=>'required',
-            'zipcode'=>'required'
+            'meta-description'=>'required',
+            'meta-title'=>'required',
             ]);
         Homes::create([
             'title'=>$request['title'],
@@ -73,10 +88,11 @@ class HomeController extends Controller
             'builder'=>$request['builder'],
             'area'=>$request['area'],
             'featured_image'=>$featured_img,
-            'gallery'=>implode(',', $gallery),
-            'slug'=>$request['slug'],
-            'meta_description'=>$request['meta_description'],
-            'meta_title'=>$request['meta_title'],
+            'gallery'=>'a.jpg',
+            // 'gallery'=>implode(',', $gallery),
+            'slug'=>Str::slug($request['title'], '-'),
+            'meta_description'=>$request['meta-description'],
+            'meta_title'=>$request['meta-title'],
         ]);
         
         $community=Communities::where('title',$request['community'])->first();
@@ -111,34 +127,34 @@ class HomeController extends Controller
     public function update(Request $request, $id)
     {
         $home =  Homes::whereId($id)->first();
-        if ($request->hasFile('featured_image')) {
-            $featured_image = $request->file('featured_image');
-            $name = $featured_image->getClientOriginalName();
-            $size = $featured_image->getClientSize();
-            $destinationPath = public_path('uploads');
-            $featured_image->move($destinationPath, $name);
-        }
-        else{
-            $name=$home->featured_image;
-        }
+        // if ($request->hasFile('featured-image')) {
+            $featured_img =  time().explode('.',$request['featured-image-name'])[0].'.' . explode('/', explode(':',substr($request['featured-image'],0,strpos(
+                $request['featured-image'],';')))[1])[1];  
+    
+            \Image::make($request['featured-image'])->save(public_path('uploads\homes\\').$featured_img);
+           
+        // }
+        // else{
+        //     $featured_image_name=$home->featured_image;
+        // }
         
-        $gallery = explode(',', $home->gallery);
-        if($request->file('gallery'))
-        {
-            $files = $request->file('gallery');
-            foreach($files as $file)
-            {
-                $extension = $file->getClientOriginalExtension(); 
-                $filename =time().'.'.$extension;
-                $file->move(public_path('uploads'), $filename);
-                array_push($gallery, $filename);
-            }
-            $gname=implode(',', $gallery);
-        }
-        else
-        {
-            $gname=$home->gallery;
-        }
+        // $gallery = explode(',', $home->gallery);
+        // if($request->file('gallery'))
+        // {
+        //     $files = $request->file('gallery');
+        //     foreach($files as $file)
+        //     {
+        //         $extension = $file->getClientOriginalExtension(); 
+        //         $filename =time().'.'.$extension;
+        //         $file->move(public_path('uploads'), $filename);
+        //         array_push($gallery, $filename);
+        //     }
+        //     $gname=implode(',', $gallery);
+        // }
+        // else
+        // {
+        //     $gname=$home->gallery;
+        // }
 
         $this->validate($request,[
             'title'=>'required',
@@ -149,17 +165,9 @@ class HomeController extends Controller
             'stories'=>'required',
             'mls'=>'required',
             'area'=>'required',
-            'slug'=>'required',
-            'meta_description'=>'required',
-            'meta_title'=>'required',
-            'title'=>'required',
-            'address'=>'required',
-            'area'=>'required',
-            'subdivission'=>'required',
-            'city'=>'required',
-            'county'=>'required',
-            'state'=>'required',
-            'zipcode'=>'required'
+            'meta-description'=>'required',
+            'meta-title'=>'required',
+
             ]);
         Homes::where('id',$id)->update([
             'title'=>$request['title'],
@@ -170,11 +178,11 @@ class HomeController extends Controller
             'stories'=>$request['stories'],
             'mls'=>$request['mls'],
             'area'=>$request['area'],
-            'featured_image'=>$name,
-            'gallery'=>$gname,
-            'slug'=>$request['slug'],
-            'meta_description'=>$request['meta_description'],
-            'meta_title'=>$request['meta_title'],
+            'featured_image'=>$featured_img,
+            'gallery'=>'anjkfd.jpg',
+            'slug'=>Str::slug($request['title'], '-'),
+            'meta_description'=>$request['meta-description'],
+            'meta_title'=>$request['meta-title'],
         ]);
         $community=Communities::where('title',$request['community'])->first();
         HomeCommunity::where('home_id',$id)->update([
