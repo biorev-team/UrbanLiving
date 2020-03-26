@@ -513,9 +513,54 @@ $(document).ready(function() {
         }
         
       }); 
+
   });
   </script>
   @endif
+  <script>
+    
+    function editfeature(id)
+      {     
+        alert(id);
+        var APP_URL = "{{ url('/') }}";
+        $.ajax({
+      type: 'GET',
+      url: APP_URL+'/api/admin/home/feature/'+id,
+
+      success: function(result){    
+        $('#feature_edit').modal('show');
+
+        document.getElementById("title").value = result.title;
+      }
+      }); 
+      $(function () {
+          $('#editForm').on('submit', function (e) {
+            var title,address,area,state,country,city,subdivission,zipcode;
+            e.preventDefault();
+                title            =  document.getElementById("title").value;         
+                 
+                        
+
+                $.ajax({
+                  type: 'post',
+                  url: '/api/admin/community/'+cid,
+                  data:{
+                    'title'           : title,
+                     
+                     
+                  },
+                  success: function () {
+                    $('#feature_edit').modal('hide');
+                    
+                  }
+                });
+
+          });
+
+      });
+      }
+
+  </script>
 <script>
     var APP_URL = "{{ url('/') }}";
     loadPagesList(); 

@@ -108,7 +108,7 @@
                 <h6 style="font-size: 12px;">{{$feature->title}}</h6><br>
                 <div class="row">
                 <div class="col-md-6">
-                <a type="button"  data-toggle="modal" data-target="#feature_edit" style="font-size: 10px;" class="btn btn-success">Edit</a>
+                <a type="button"   onclick="editfeature('{{$feature->id}}')" style="font-size: 10px;" class="btn btn-success">Edit</a>
                 </div>
                 <div class="col-md-6">
                 <a type="button" href="#" style="font-size: 10px;" class="btn btn-danger">Delete</a>
@@ -134,10 +134,12 @@
       </div>
       <div class="modal-body">
 
-      <form action="{{route('feature-create')}}" method="post">
+      <form action="{{route('feature-create')}}" method="post" enctype="multipart/form-data">
+           @csrf
         <div class="form-group">
+
           <label for="inputProperty">Feature Name</label>
-          <input type="text" class="form-control" id="inputTitle" name="title" placeholder="">
+          <input type="text" class="form-control" id="title" name="title" placeholder="">
         </div>
         <div class="form-group">
         <div class="row">

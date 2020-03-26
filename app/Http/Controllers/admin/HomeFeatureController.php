@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 Use App\Models\Features;
 Use App\Models\Homes;
 use App\Http\Controllers\Controller;
+use Redirect;
 
 class HomeFeatureController extends Controller
 { 
@@ -25,20 +26,19 @@ class HomeFeatureController extends Controller
     */
    public function store(Request $request)
    {
-       $featured_img = time().explode('.',$request['featured-image'])[0].'.' . explode('/', explode(':',substr($request['image'],0,strpos(
-           $request['image'],';')))[1])[1];  
-
-       \Image::make($request['image'])->save(public_path('uploads\featuredImages\homeFeatures\\').$featured_img);
-       $this->validate($request,[
+          $image = $request->file('featured-image');
+          $name = $image->getClientOriginalName();
+          $destinationPath = public_path('/uploads');
+          $image->move($destinationPath, $name);
+            $this->validate($request,[
            'title'=>'required',
-           'home_id'=>'required'
            ]);
        Features::create([
            'home_id'=>'14',
            'title'=>$request['title'],
-            'image'=>$featured_img,
+            'image'=>$name,
        ]);
-
+       return Redirect::back();
    }
 
    /**
@@ -49,7 +49,7 @@ class HomeFeatureController extends Controller
     */
    public function show($id)
    {
-       //
+       return Features::where('id',$id)->get()->first();
    }
 
    /**
