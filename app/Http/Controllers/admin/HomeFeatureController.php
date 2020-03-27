@@ -34,10 +34,11 @@ class HomeFeatureController extends Controller
            'title'=>'required',
            ]);
        Features::create([
-           'home_id'=>'32',
+           'home_id'=>$request['home_id'],
            'title'=>$request['title'],
             'image'=>$name,
        ]);
+       return Redirect::back();
    }
 
    /**

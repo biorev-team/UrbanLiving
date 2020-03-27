@@ -526,44 +526,44 @@ $(document).ready(function() {
             });
            
     }
-    // function editfeature(id)
-    //   {     
-    //     var APP_URL = "{{ url('/') }}";
-    //     $.ajax({
-    //   type: 'GET',
-    //   url: APP_URL+'/api/admin/home/feature/'+id,
-    //   success: function(result){    
-    //     $('#editFeature').modal('show');
+    function editfeature(id)
+      {     
+        var APP_URL = "{{ url('/') }}";
+        $.ajax({
+      type: 'GET',
+      url: APP_URL+'/api/admin/home/feature/'+id,
+      success: function(result){    
+        $('#editFeature').modal('show');
 
-    //     document.getElementById("title").value = result.title;
-    //   }
-    //   }); 
-    //   $(function () {
-    //       $('#editForm').on('submit', function (e) {
-    //         var title;
-    //         e.preventDefault();
-    //             title            =  document.getElementById("title").value;         
+        document.getElementById("title").value = result.title;
+      }
+      }); 
+      $(function () {
+          $('#editForm').on('submit', function (e) {
+            var title;
+            e.preventDefault();
+                title            =  document.getElementById("title").value;         
                  
                         
 
-    //             $.ajax({
-    //               type: 'post',
-    //               url: '/api/admin/community/'+cid,
-    //               data:{
-    //                 'title'           : title,
+                $.ajax({
+                  type: 'post',
+                  url: '/api/admin/community/'+cid,
+                  data:{
+                    'title'           : title,
                      
                      
-    //               },
-    //               success: function () {
-    //                 $('#featureEdit').modal('hide');
+                  },
+                  success: function () {
+                    $('#featureEdit').modal('hide');
                     
-    //               }
-    //             });
+                  }
+                });
 
-    //       });
+          });
 
-    //   });
-    //   }
+      });
+      }
 
   </script>
 <script>
