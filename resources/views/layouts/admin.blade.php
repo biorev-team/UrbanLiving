@@ -521,21 +521,19 @@ $(document).ready(function() {
     
     function editfeature(id)
       {     
-        alert(id);
         var APP_URL = "{{ url('/') }}";
         $.ajax({
       type: 'GET',
       url: APP_URL+'/api/admin/home/feature/'+id,
-
       success: function(result){    
-        $('#feature_edit').modal('show');
+        $('#Addfeature').modal('show');
 
         document.getElementById("title").value = result.title;
       }
       }); 
       $(function () {
           $('#editForm').on('submit', function (e) {
-            var title,address,area,state,country,city,subdivission,zipcode;
+            var title;
             e.preventDefault();
                 title            =  document.getElementById("title").value;         
                  
@@ -550,7 +548,7 @@ $(document).ready(function() {
                      
                   },
                   success: function () {
-                    $('#feature_edit').modal('hide');
+                    $('#featureEdit').modal('hide');
                     
                   }
                 });

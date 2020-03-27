@@ -57,7 +57,6 @@ Route::get('/availsold', function () {
 
 Route::get( 'admin/home/manage/{id}', 'admin\HomeFeatureController@index');
 Route::post( 'admin/home/feature', 'admin\HomeFeatureController@store')->name('feature-create');
-Route::get( 'admin/home/feature/{id}', 'admin\HomeFeatureController@show');
 
 
 // end of admin section
