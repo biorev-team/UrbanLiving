@@ -2,13 +2,22 @@
 @section('content')
 <div class="container details-container">
 <form>
-    <div class="form-group">
+  <div class="form-row "> 
+    <div class="form-group col-md-4">
       <label for="inputTitle">Title</label>
       <input type="text" class="form-control" id="title"  >
     </div>
-  <div class="form-group">
+  <div class="form-group col-md-4">
     <label for="inputDescription">Description</label>
     <input type="text" class="form-control" id="description"  >
+  </div>
+  <div class="form-group col-md-4">
+    <label for="community">Status</label>
+    <select id="community" class="form-control">
+      <option selected>Available</option>
+     
+    </select>
+  </div>
   </div>
   <div class="form-row">
   <div class="form-group col-md-4">
