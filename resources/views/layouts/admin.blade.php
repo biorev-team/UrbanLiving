@@ -422,7 +422,7 @@ $(document).ready(function() {
                     'featured-image-name' : image_name,
                   },
                   success: function () {
-                    
+                    window.location.href = "/admin/home/manage/"+id;
                   }
                 });
 
@@ -484,8 +484,8 @@ $(document).ready(function() {
                     'featured-image'      : image,
                     'featured-image-name' : image_name,
                   },
-                  success: function () {
-                    
+                  success: function ( ) {
+                    window.location.href = "/admin/homes";
                   }
                 });
 
@@ -518,45 +518,52 @@ $(document).ready(function() {
   </script>
   @endif
   <script>
-    
-    function editfeature(id)
-      {     
-        var APP_URL = "{{ url('/') }}";
-        $.ajax({
-      type: 'GET',
-      url: APP_URL+'/api/admin/home/feature/'+id,
-      success: function(result){    
-        $('#Addfeature').modal('show');
+    function deleteFeature(id)
+    {
+      $.ajax({
+              url: APP_URL + '/api/admin/home/feature/'+ id,
+              type: 'DELETE'
+            });
+           
+    }
+    // function editfeature(id)
+    //   {     
+    //     var APP_URL = "{{ url('/') }}";
+    //     $.ajax({
+    //   type: 'GET',
+    //   url: APP_URL+'/api/admin/home/feature/'+id,
+    //   success: function(result){    
+    //     $('#editFeature').modal('show');
 
-        document.getElementById("title").value = result.title;
-      }
-      }); 
-      $(function () {
-          $('#editForm').on('submit', function (e) {
-            var title;
-            e.preventDefault();
-                title            =  document.getElementById("title").value;         
+    //     document.getElementById("title").value = result.title;
+    //   }
+    //   }); 
+    //   $(function () {
+    //       $('#editForm').on('submit', function (e) {
+    //         var title;
+    //         e.preventDefault();
+    //             title            =  document.getElementById("title").value;         
                  
                         
 
-                $.ajax({
-                  type: 'post',
-                  url: '/api/admin/community/'+cid,
-                  data:{
-                    'title'           : title,
+    //             $.ajax({
+    //               type: 'post',
+    //               url: '/api/admin/community/'+cid,
+    //               data:{
+    //                 'title'           : title,
                      
                      
-                  },
-                  success: function () {
-                    $('#featureEdit').modal('hide');
+    //               },
+    //               success: function () {
+    //                 $('#featureEdit').modal('hide');
                     
-                  }
-                });
+    //               }
+    //             });
 
-          });
+    //       });
 
-      });
-      }
+    //   });
+    //   }
 
   </script>
 <script>
@@ -716,7 +723,6 @@ $(document).ready(function() {
                      
                   },
                   success: function () {
-                    $('#communityModal').modal('reset');
                     $('#communityModal').modal('hide');
                     loadCommunityList();
                   }

@@ -34,11 +34,10 @@ class HomeFeatureController extends Controller
            'title'=>'required',
            ]);
        Features::create([
-           'home_id'=>'14',
+           'home_id'=>'32',
            'title'=>$request['title'],
             'image'=>$name,
        ]);
-       return Redirect::back();
    }
 
    /**
@@ -81,6 +80,7 @@ class HomeFeatureController extends Controller
            'title'=>$request['title'],
             'image'=>$image,
        ]);
+       return Redirect::back();
    }
 
    /**

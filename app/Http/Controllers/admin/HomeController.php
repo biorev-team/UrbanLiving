@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Homes;
 use App\Models\HomeCommunity;
+use App\Models\Communities;
 use Illuminate\Support\Str;
 
 class HomeController extends Controller
@@ -23,7 +24,7 @@ class HomeController extends Controller
         {
             $data .=' <div class="col-md-4" >
             <div class="card">
-              <img class="card-img-top" src="/urbanliving/public/uploads/homes/'.$home->featured_image.'">
+              <img class="card-img-top" src="/uploads/homes/'.$home->featured_image.'">
               <div class="card-body">
               <h5 class="card-title" style="font-size: 15px;">'.$home->title.'</h5>
                  <br><br>
@@ -95,12 +96,7 @@ class HomeController extends Controller
             'meta_title'=>$request['meta-title'],
         ]);
         
-        $community=Communities::where('title',$request['community'])->first();
-        $community=Home::where('title',$request['title'])->first();
-        HomeCommunity::create([
-            'home_id'=>$home->id,
-            'community_id'=>$community->id,
-        ]);
+        return ['success'];
         
     }
 
@@ -165,6 +161,7 @@ class HomeController extends Controller
             'stories'=>'required',
             'mls'=>'required',
             'area'=>'required',
+            'builder'=>'required',
             'meta-description'=>'required',
             'meta-title'=>'required',
 
@@ -178,17 +175,15 @@ class HomeController extends Controller
             'stories'=>$request['stories'],
             'mls'=>$request['mls'],
             'area'=>$request['area'],
+            'builder'=>$request['builder'],
             'featured_image'=>$featured_img,
             'gallery'=>'anjkfd.jpg',
             'slug'=>Str::slug($request['title'], '-'),
             'meta_description'=>$request['meta-description'],
             'meta_title'=>$request['meta-title'],
         ]);
-        $community=Communities::where('title',$request['community'])->first();
-        HomeCommunity::where('home_id',$id)->update([
-            'home_id'=>$id,
-            'community_id'=>$community->id,
-        ]);
+
+        return redirect("admin/home/manage/$id");
       
     }
 
