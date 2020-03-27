@@ -369,6 +369,7 @@ $(document).ready(function() {
         document.getElementById("stories").value = result.stories;
         document.getElementById("mls").value = result.mls;
         document.getElementById("area").value = result.area;
+        document.getElementById("community_list").value = result.community;
         document.getElementById("builder").value = result.builder;
         document.getElementById("meta_title").value = result.meta_title;
         document.getElementById("meta_description").value = result.meta_description;
@@ -401,6 +402,7 @@ $(document).ready(function() {
                 mls            =  document.getElementById("mls").value;         
                 area            =  document.getElementById("area").value;         
                 builder            =  document.getElementById("builder").value;         
+                community            =  document.getElementById("community_list").value;         
                 meta_description            =  document.getElementById("meta_description").value;         
                 meta_title            =  document.getElementById("meta_title").value;         
                 $.ajax({
@@ -416,6 +418,7 @@ $(document).ready(function() {
                     'mls'                 : mls,
                     'area'                : area,
                     'builder'             : builder,
+                    'community'           : community,
                     'meta-title'          : meta_title,
                     'meta-description'    : meta_description,
                     'featured-image'      : image,
@@ -453,7 +456,7 @@ $(document).ready(function() {
         });
         $(function () {
           $('form').on('submit', function (e) {
-            var title,description,bedroom,bathroom,garage,stories,mls,area,builder,meta_description,meta_title;
+            var title,description,bedroom,bathroom,garage,community,stories,mls,area,builder,meta_description,meta_title;
             e.preventDefault();
                 title            =  document.getElementById("title").value;         
                 description            =  document.getElementById("description").value;         
@@ -463,6 +466,7 @@ $(document).ready(function() {
                 stories            =  document.getElementById("stories").value;         
                 mls            =  document.getElementById("mls").value;         
                 area            =  document.getElementById("area").value;         
+                community            =  document.getElementById("community_list").value;         
                 builder            =  document.getElementById("builder").value;         
                 meta_description            =  document.getElementById("meta_description").value;         
                 meta_title            =  document.getElementById("meta_title").value;         
@@ -478,6 +482,7 @@ $(document).ready(function() {
                     'stories'             : stories,
                     'mls'                 : mls,
                     'area'                : area,
+                    'community'           : community,
                     'builder'             : builder,
                     'meta-title'          : meta_title,
                     'meta-description'    : meta_description,
@@ -603,6 +608,27 @@ $(document).ready(function() {
       
  </script> 
  @endif 
+
+ @if(Route::currentRouteName() == 'create-home'||Route::currentRouteName() == 'edit-home')
+  <script>
+    var APP_URL = "{{ url('/') }}";
+    var id = window.location.href.split('/').pop();
+    loadCommunityList();
+      function loadCommunityList(){
+        var display;
+    $.ajax({
+          type: 'GET',
+          url: APP_URL+'/api/admin/communityList',
+          success: function(result){
+            $.each(result,function(k){
+              display += '<option value="'+result[k].id+'">'+result[k].title+'</option>';
+            })
+          $('#community_list').html(display);
+          }   
+      });
+  }
+</script>
+@endif
 
  @if(Route::currentRouteName() == 'communities')
   <script>

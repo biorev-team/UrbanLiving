@@ -95,7 +95,11 @@ class HomeController extends Controller
             'meta_description'=>$request['meta-description'],
             'meta_title'=>$request['meta-title'],
         ]);
-        
+        $home=Homes::where('slug',Str::slug($request['title'], '-'))->get()->first();
+        HomeCommunity::create([
+            'home_id'=>$home->id,
+            'community_id'=>$request['community']
+        ]);
         return ['success'];
         
     }
@@ -108,7 +112,10 @@ class HomeController extends Controller
      */
     public function show($id)
     {
-       return Homes::where('id',$id)->get()->first();
+       $home= Homes::where('id',$id)->get()->first();
+       $hc=HomeCommunity::where('home_id',$id)->get()->first();
+       $community = Communities::where('id',$hc->community_id)->get('title')->first();
+       return $home;
     }
 
     
@@ -183,7 +190,12 @@ class HomeController extends Controller
             'meta_title'=>$request['meta-title'],
         ]);
 
-        return redirect("admin/home/manage/$id");
+        $home=Homes::where('slug',Str::slug($request['title'], '-'))->get()->first();
+        HomeCommunity::where('home_id',$id)->update([
+            'home_id'=>$home->id,
+            'community_id'=>$request['community']
+        ]);
+        return ['success'];
       
     }
 

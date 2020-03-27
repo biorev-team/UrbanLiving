@@ -13,8 +13,7 @@
   </div>
   <div class="form-group col-md-4">
     <label for="community">Status</label>
-    <select id="community" class="form-control">
-      <option selected>Available</option>
+    <select id="community_list" class="form-control">
      
     </select>
   </div>

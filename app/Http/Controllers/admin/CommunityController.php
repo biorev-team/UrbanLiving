@@ -72,6 +72,11 @@ class CommunityController extends Controller
         return Communities::where('id',$id)->get()->first();
     }
 
+    public function data()
+    {
+        return Communities::get();
+    }
+
     /**
      * Update the specified resource in storage.
      *
