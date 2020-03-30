@@ -25,7 +25,13 @@ Route::resources([
 Route::post('admin/home/{id}','admin\HomeController@update');
 Route::get('admin/communityList','admin\CommunityController@data');
 Route::post('admin/community/{id}','admin\CommunityController@update');
-Route::get( 'admin/home-feature/{id}', 'admin\HomeFeatureController@index');
-Route::get( 'admin/home/feature/{id}', 'admin\HomeFeatureController@show');
-Route::delete( 'admin/home/feature/{id}', 'admin\HomeFeatureController@destroy');
 Route::get( 'admin/home-status', 'CommonController@status');
+
+
+Route::get( 'admin/home-feature/{id}', 'CommonController@features');
+Route::post( 'admin/home-feature/{id}', 'admin\HomeFeatureController@update');
+Route::get( 'admin/home-feature-data/{id}', 'CommonController@featureData');
+Route::get( 'admin/home/feature/{id}', 'admin\HomeFeatureController@show');
+Route::delete( 'admin/home-feature/{id}', 'admin\HomeFeatureController@destroy');
+
+

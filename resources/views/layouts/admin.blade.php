@@ -504,86 +504,98 @@ $(document).ready(function() {
 });
 </script>
 @endif
-@if(Route::currentRouteName() =='manage-home')
+
+
+
 <script>
-  $(document).ready(function() {
     var APP_URL = "{{ url('/') }}";
     var id = window.location.href.split('/').pop();
-   
-    $.ajax({
-        type: 'GET',
-        url: APP_URL+'/api/admin/home/'+id,
-  
-        success: function(result){     
-          document.getElementById("title").innerHTML = result.title;
-          document.getElementById("description").innerHTML = result.description;
-          document.getElementById("area").innerHTML = result.area;
-          document.getElementById("builder").innerHTML = result.builder;
-        }
-        
-      }); 
-      $.ajax({
-        type: 'GET',
-        url: APP_URL+'/api/admin/home-feature'+id,
-  
-        success: function(result){     
-     
-        }
-        
-      });
-
-  });
-  </script>
-  @endif
-  <script>
+    loadFeatureList();
+      function loadFeatureList(){
+        $.ajax({
+          type: 'GET',
+          url: APP_URL+'/api/admin/home-feature/'+id,
+          success: function(result){   
+            $('#feature_list').html(result);
+          }   
+        });
+      }
     function deleteFeature(id)
     {
       $.ajax({
-              url: APP_URL + '/api/admin/home/feature/'+ id,
+              url: APP_URL + '/api/admin/home-feature/'+ id,
               type: 'DELETE'
             });
+            loadFeatureList();
            
     }
     function editfeature(id)
       {     
+        
         var APP_URL = "{{ url('/') }}";
         $.ajax({
       type: 'GET',
-      url: APP_URL+'/api/admin/home/feature/'+id,
+      url: APP_URL+'/api/admin/home-feature-data/'+id,
       success: function(result){    
-        $('#editFeature').modal('show');
-
         document.getElementById("title").value = result.title;
+        $('#Editfeature').modal('show');
       }
       }); 
-      $(function () {
-          $('#editForm').on('submit', function (e) {
-            var title;
-            e.preventDefault();
-                title            =  document.getElementById("title").value;         
-                 
-                        
-
-                $.ajax({
-                  type: 'post',
-                  url: '/api/admin/community/'+cid,
-                  data:{
-                    'title'           : title,
-                     
-                     
-                  },
-                  success: function () {
-                    $('#featureEdit').modal('hide');
-                    
+      $('input[type=file]').on('change',function(e){
+                let files = e.target.files[0];
+                let reader = new FileReader();
+                if(files){
+                  reader.onloadend = ()=>{
+                    $('#chosen_feature_img').attr('src',reader.result);
+                    image = reader.result;
+                    image_name = files.name;
+                  // document.getElementById("featured_img").value  = reader.result;
                   }
-                });
+                  reader.readAsDataURL(files); 
+              }
+            });
+            $(function () {
+              $('form').on('submit', function (e) {
+                var title,home_id ;
+                e.preventDefault();
+                    title              =  document.getElementById("title").value;         
+                    home_id              =  document.getElementById("home_id").value;         
+                    $.ajax({
+                      type: 'post',
+                      url: '/api/admin/home-feature/'+id,
+                      data:{
+                        'title'               : title,
+                        'home_id'             : home_id,
+                        'featured-image'      : image,
+                        'featured-image-name' : image_name,
+                      },
+                      success: function () {
+                        $('#Editfeature').modal('hide');
+                          loadFeatureList();
+                      }
+                    });
+
+              });
 
           });
-
-      });
       }
+</script>
+ 
+   
+    {{-- // $.ajax({
+    //     type: 'GET',
+    //     url: APP_URL+'/api/admin/home/'+id,
+  
+    //     success: function(result){     
+    //       document.getElementById("title").innerHTML = result.title;
+    //       document.getElementById("description").innerHTML = result.description;
+    //       document.getElementById("area").innerHTML = result.area;
+    //       document.getElementById("builder").innerHTML = result.builder;
+    //     }
+        
+    //   });  --}}
 
-  </script>
+   
 <script>
     var APP_URL = "{{ url('/') }}";
     loadPagesList(); 

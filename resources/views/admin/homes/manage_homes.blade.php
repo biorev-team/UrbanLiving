@@ -50,7 +50,7 @@
       </div>
         <div class="col-md-5">
           <div class="container details"><br><br>
-          <h6><strong id='title'>{{$home->title}}</strong></h6>
+          <h6><strong id=''>{{$home->title}}</strong></h6>
             <h6 style="font-size: 12px;" id='description'>{{$home->description}}</h6>
             <h6 style="font-size: 12px;" id='area'>{{$home->area}}</h6>
             <h6 style="font-size: 12px;" id='builder'>{{$home->builder}}</h6>
@@ -76,33 +76,56 @@
       </div>
     </div><br><br>
     
-    <div class="row">
-          @foreach($features as $feature)
-      <div class="col-md-6">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card">
-              <img class="card-img-top" style="height: 150px;" src="/uploads/{{$feature->image}}" alt="">
-            </div>
-          </div>
-            <div class="col-md-4">
-              <div class="container details">
-                <h6 style="font-size: 12px;">{{$feature->title}}</h6><br>
-                <div class="row">
-                <div class="col-md-6">
-                <a type="button"  onclick="editfeature('{{$feature->id}}')" style="font-size: 10px;" class="btn btn-success">Edit</a>
-                </div>
-                <div class="col-md-6">
-                <a type="button" href="" onclick="deleteFeature('{{$feature->id}}')" style="font-size: 10px;" class="btn btn-danger">Delete</a>
-                </div>
-                </div>
-              </div>
-            </div>    
-          </div><br><br>
-        </div> 
-            @endforeach       
+    <div class="row" id="feature_list">
+              
     </div>
  
+    <div class="modal fade" id="Editfeature" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Features</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          <form action="" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+              @csrf
+              <label for="inputProperty">Feature Name</label>
+              <input type="text" class="form-control" id="title" name="title" placeholder="">
+              @foreach($homes as $home)
+              <input type="hidden" class="form-control" id="home_id" name="home_id" placeholder="" value="{{$home->id}}">
+          @endforeach
+            </div>
+            <div class="form-group">
+            <div class="row">
+            <div class="col-md-6">
+              <label for="inputProperty">Feature Image</label>
+              <div class="card" style="width: 150px;">
+                <img class="card-img-top" style="height: 150px;" src="" alt="">
+              </div>
+              </div>
+              <div class="col-md-6">
+              <form action="/action_page.php">
+            <label for="img">Select image:</label>
+            <input type="file" id="img" name="featured-image" accept="image/*">
+            </form>
+            </div>
+          </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  
+
 
 <!-- Modal -->
   <div class="modal fade" id="Addfeature" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -115,12 +138,11 @@
           </button>
         </div>
         <div class="modal-body">
-          @foreach($features as $feature)
         <form action="{{route('feature-create')}}" method="post" enctype="multipart/form-data">
           <div class="form-group">
             @csrf
             <label for="inputProperty">Feature Name</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="">
+            <input type="text" class="form-control" id="inputtitle" name="title" placeholder="">
             @foreach($homes as $home)
             <input type="hidden" class="form-control" id="home_id" name="home_id" placeholder="" value="{{$home->id}}">
         @endforeach
@@ -130,7 +152,7 @@
           <div class="col-md-6">
             <label for="inputProperty">Feature Image</label>
             <div class="card" style="width: 150px;">
-              <img class="card-img-top" style="height: 150px;" src="/uploads/{{$feature->image}}" alt="">
+              <img class="card-img-top" style="height: 150px;" src="" alt="">
             </div>
             </div>
             <div class="col-md-6">
@@ -140,7 +162,6 @@
           </form>
           </div>
         </form>
-      @endforeach
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

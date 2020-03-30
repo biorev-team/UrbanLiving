@@ -61,27 +61,20 @@ class HomeFeatureController extends Controller
     */
    public function update(Request $request, $id)
    {
-       if ($request->hasFile('image')) {
-           $featured_img = time().explode('.',$request['featured-image-name'])[0].'.' . explode('/', explode(':',substr($request['image'],0,strpos(
-               $request['image'],';')))[1])[1];  
-   
-           \Image::make($request['image'])->save(public_path('uploads\featuredImages\homeFeatures\\').$featured_img);
-       }
-       else
-       {
-         $feature = Features::where('id',$id)->first();
-         $image=$feature->image;
-       }
+        $featured_img =  explode('.',$request['featured-image-name'])[0].'.' . explode('/', explode(':',substr($request['featured-image'],0,strpos(
+            $request['featured-image'],';')))[1])[1];  
+
+        \Image::make($request['featured-image'])->save(public_path('uploads').$featured_img);
+        
        $this->validate($request,[
            'title'=>'required',
            'home_id'=>'required'
            ]);
-       Features::where('id',$id)->upadte([
+       Features::where('id',$id)->update([
            'home_id'=>$request['home_id'],
            'title'=>$request['title'],
-            'image'=>$image,
+            'image'=>$featured_img,
        ]);
-       return Redirect::back();
    }
 
    /**

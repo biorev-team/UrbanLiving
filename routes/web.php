@@ -36,7 +36,7 @@ Route::get('admin/home/edit/{id}', function(){
 })->name('edit-home');
 Route::get('admin/home/manage/{id}', function(){
     return view('admin.homes.manage_homes');
-})->name('manage-home');
+})->name('manage-homes');
 Route::get('admin/home/create', function(){
     return view('admin.homes.homeForm');
 })->name('create-home');
