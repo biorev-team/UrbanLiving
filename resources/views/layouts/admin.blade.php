@@ -783,12 +783,13 @@ $(document).ready(function() {
                     'city'            : city,
                     'county'          : country,
                     'subdivission'    : subdivission,
-                    'state'    : state,
+                    'state'           : state,
                     'zipcode'         : zipcode,
                      
                   },
                   success: function () {
                     $('#communityModal').modal('hide');
+                    $('.modal-backdrop').css('display','none');
                     loadCommunityList();
                   }
                 });

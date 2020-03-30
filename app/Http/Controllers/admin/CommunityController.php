@@ -49,6 +49,16 @@ class CommunityController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'title'=>'required',
+            'address'=>'required',
+            'area'=>'required',
+            'subdivission'=>'required',
+            'city'=>'required',
+            'county'=>'required',
+            'state'=>'required',
+            'zipcode'=>'required',
+            ]);
         Communities::create([
             'title'=>$request['title'],
             'address'=>$request['address'],
@@ -86,6 +96,16 @@ class CommunityController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,[
+            'title'=>'required',
+            'address'=>'required',
+            'area'=>'required',
+            'subdivission'=>'required',
+            'city'=>'required',
+            'county'=>'required',
+            'state'=>'required',
+            'zipcode'=>'required',
+            ]);
         Communities::where('id',$id)->update([
             'title'=>$request['title'],
             'address'=>$request['address'],
