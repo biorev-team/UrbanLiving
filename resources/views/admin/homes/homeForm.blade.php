@@ -1,5 +1,15 @@
 @extends('layouts.admin')
 @section('content')
+<div class="container details-container" style="width: 900px;">
+  <div class="row">
+  <div class="col-md-6">
+  <a type="button" href="/admin/homes" style="color: white;" class="btn btn-info">Go Back</a>
+  </div>
+  <div class="col-md-6">
+  <h4 style="color: black;"><strong>Home</strong></h4>
+  </div>
+  </div>
+  <br><br><br>
 <div class="container details-container">
 <form>
   <div class="form-row "> 
@@ -12,7 +22,7 @@
     <input type="text" class="form-control" id="description"  >
   </div>
   <div class="form-group col-md-4">
-    <label for="community">Status</label>
+    <label for="community">Community</label>
     <select id="community_list" class="form-control">
      
     </select>
@@ -80,11 +90,8 @@
     </div>
     <div class="form-group col-md-3">
       <label for="inputState">Status</label>
-      <select id="inputState" class="form-control">
-        <option selected>Available</option>
-        <option>Sold</option>
-        <option>Hold</option>
-        <option>Under Construction</option>
+      <select id="status" class="form-control">
+       
       </select>
     </div>
   </div>

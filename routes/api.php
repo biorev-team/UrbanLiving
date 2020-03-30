@@ -19,11 +19,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resources([
     'page'              => 'Admin\PageController',
     'admin/home'        => 'Admin\HomeController',
-    'admin/community'        => 'Admin\CommunityController',
-   
+    'admin/community'   => 'Admin\CommunityController',
 ]);
+
 Route::post('admin/home/{id}','admin\HomeController@update');
 Route::get('admin/communityList','admin\CommunityController@data');
 Route::post('admin/community/{id}','admin\CommunityController@update');
+Route::get( 'admin/home-feature/{id}', 'admin\HomeFeatureController@index');
 Route::get( 'admin/home/feature/{id}', 'admin\HomeFeatureController@show');
 Route::delete( 'admin/home/feature/{id}', 'admin\HomeFeatureController@destroy');
+Route::get( 'admin/home-status', 'CommonController@status');

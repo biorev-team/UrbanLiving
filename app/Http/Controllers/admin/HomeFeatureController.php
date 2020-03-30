@@ -12,7 +12,7 @@ class HomeFeatureController extends Controller
 { 
    public function index(Request $request)
    {
-       $id =$request['id'];
+       $id= $request['id'];
        $features = Features::where('home_id',$id)->get(); 
        $homes = Homes::where('id',$id)->get(); 
        return view('admin.homes.manage_homes')->with('features',$features)->with('homes',$homes) ;

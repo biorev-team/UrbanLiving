@@ -24,7 +24,7 @@ class HomeController extends Controller
         {
             $data .=' <div class="col-md-4" >
             <div class="card">
-              <img class="card-img-top" src="/uploads/homes/'.$home->featured_image.'">
+              <img class="card-img-top"style="height:200px;"  src="/uploads/homes/'.$home->featured_image.'">
               <div class="card-body">
               <h5 class="card-title" style="font-size: 15px;">'.$home->title.'</h5>
                  <br><br>
@@ -76,6 +76,7 @@ class HomeController extends Controller
             'mls'=>'required',
             'area'=>'required',
             'meta-description'=>'required',
+            'status'=>'required',
             'meta-title'=>'required',
             ]);
         Homes::create([
@@ -92,6 +93,7 @@ class HomeController extends Controller
             'gallery'=>'a.jpg',
             // 'gallery'=>implode(',', $gallery),
             'slug'=>Str::slug($request['title'], '-'),
+            'status_id'=> $request['status'],
             'meta_description'=>$request['meta-description'],
             'meta_title'=>$request['meta-title'],
         ]);
@@ -113,8 +115,6 @@ class HomeController extends Controller
     public function show($id)
     {
        $home= Homes::where('id',$id)->get()->first();
-       $hc=HomeCommunity::where('home_id',$id)->get()->first();
-       $community = Communities::where('id',$hc->community_id)->get('title')->first();
        return $home;
     }
 
@@ -169,6 +169,7 @@ class HomeController extends Controller
             'mls'=>'required',
             'area'=>'required',
             'builder'=>'required',
+            'status'=>'required',
             'meta-description'=>'required',
             'meta-title'=>'required',
 
@@ -183,6 +184,7 @@ class HomeController extends Controller
             'mls'=>$request['mls'],
             'area'=>$request['area'],
             'builder'=>$request['builder'],
+            'status_id'=>$request['status'],
             'featured_image'=>$featured_img,
             'gallery'=>'anjkfd.jpg',
             'slug'=>Str::slug($request['title'], '-'),

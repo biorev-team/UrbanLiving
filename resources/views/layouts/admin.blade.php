@@ -250,6 +250,7 @@
             </ol>
         
           </div><!-- /.col -->
+          @include('inc.message')
           @yield('content')
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -391,20 +392,21 @@ $(document).ready(function() {
         });
         $(function () {
           $('form').on('submit', function (e) {
-            var title,description,bedroom,bathroom,garage,stories,mls,area,builder,meta_description,meta_title;
+            var title,description,bedroom,bathroom,garage,status,stories,mls,area,builder,meta_description,meta_title;
             e.preventDefault();
-                title            =  document.getElementById("title").value;         
-                description            =  document.getElementById("description").value;         
+                title              =  document.getElementById("title").value;         
+                description        =  document.getElementById("description").value;         
                 bedroom            =  document.getElementById("bedroom").value;         
-                bathroom            =  document.getElementById("bathroom").value;         
-                garage            =  document.getElementById("garage").value;         
+                bathroom           =  document.getElementById("bathroom").value;         
+                garage             =  document.getElementById("garage").value;         
                 stories            =  document.getElementById("stories").value;         
-                mls            =  document.getElementById("mls").value;         
-                area            =  document.getElementById("area").value;         
+                mls                =  document.getElementById("mls").value;         
+                area               =  document.getElementById("area").value;         
+                status               =  document.getElementById("status").value;         
                 builder            =  document.getElementById("builder").value;         
-                community            =  document.getElementById("community_list").value;         
-                meta_description            =  document.getElementById("meta_description").value;         
-                meta_title            =  document.getElementById("meta_title").value;         
+                community          =  document.getElementById("community_list").value;         
+                meta_description   =  document.getElementById("meta_description").value;         
+                meta_title         =  document.getElementById("meta_title").value;         
                 $.ajax({
                   type: 'post',
                   url: '/api/admin/home/'+id,
@@ -419,6 +421,7 @@ $(document).ready(function() {
                     'area'                : area,
                     'builder'             : builder,
                     'community'           : community,
+                    'status'              : status,
                     'meta-title'          : meta_title,
                     'meta-description'    : meta_description,
                     'featured-image'      : image,
@@ -456,20 +459,21 @@ $(document).ready(function() {
         });
         $(function () {
           $('form').on('submit', function (e) {
-            var title,description,bedroom,bathroom,garage,community,stories,mls,area,builder,meta_description,meta_title;
+            var title,description,bedroom,bathroom,garage,community,stories,mls,status,area,builder,meta_description,meta_title;
             e.preventDefault();
                 title            =  document.getElementById("title").value;         
-                description            =  document.getElementById("description").value;         
-                bedroom            =  document.getElementById("bedroom").value;         
-                bathroom            =  document.getElementById("bathroom").value;         
-                garage            =  document.getElementById("garage").value;         
-                stories            =  document.getElementById("stories").value;         
-                mls            =  document.getElementById("mls").value;         
-                area            =  document.getElementById("area").value;         
-                community            =  document.getElementById("community_list").value;         
-                builder            =  document.getElementById("builder").value;         
-                meta_description            =  document.getElementById("meta_description").value;         
-                meta_title            =  document.getElementById("meta_title").value;         
+                description      =  document.getElementById("description").value;         
+                bedroom          =  document.getElementById("bedroom").value;         
+                bathroom         =  document.getElementById("bathroom").value;         
+                garage           =  document.getElementById("garage").value;         
+                stories          =  document.getElementById("stories").value;         
+                mls              =  document.getElementById("mls").value;         
+                area             =  document.getElementById("area").value;         
+                community        =  document.getElementById("community_list").value;         
+                builder          =  document.getElementById("builder").value;         
+                meta_description =  document.getElementById("meta_description").value;         
+                meta_title       =  document.getElementById("meta_title").value;         
+                status       =  document.getElementById("status").value;         
                 $.ajax({
                   type: 'post',
                   url: '/api/admin/home/',
@@ -483,6 +487,7 @@ $(document).ready(function() {
                     'mls'                 : mls,
                     'area'                : area,
                     'community'           : community,
+                    'status'              : status,
                     'builder'             : builder,
                     'meta-title'          : meta_title,
                     'meta-description'    : meta_description,
@@ -490,7 +495,6 @@ $(document).ready(function() {
                     'featured-image-name' : image_name,
                   },
                   success: function ( ) {
-                    window.location.href = "/admin/homes";
                   }
                 });
 
@@ -518,6 +522,15 @@ $(document).ready(function() {
         }
         
       }); 
+      $.ajax({
+        type: 'GET',
+        url: APP_URL+'/api/admin/home-feature'+id,
+  
+        success: function(result){     
+     
+        }
+        
+      });
 
   });
   </script>
@@ -624,6 +637,20 @@ $(document).ready(function() {
               display += '<option value="'+result[k].id+'">'+result[k].title+'</option>';
             })
           $('#community_list').html(display);
+          }   
+      });
+  }
+  loadStatusList();
+      function loadStatusList(){
+        var display;
+    $.ajax({
+          type: 'GET',
+          url: APP_URL+'/api/admin/home-status',
+          success: function(result){
+            $.each(result,function(k){
+              display += '<option value="'+result[k].id+'">'+result[k].status+'</option>';
+            })
+          $('#status').html(display);
           }   
       });
   }
