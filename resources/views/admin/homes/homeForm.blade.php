@@ -60,7 +60,7 @@
 <div class="col-md-6">
   <div class="image-upload">
   <p>Featured Image</p>
-  <p><input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: none;"></p>
+  <p><input type="file"  name="image" id="file"  onchange="loadFile(event)" ></p>
 <p><label for="file" style="cursor: pointer;">Choose File</label></p>
 <p><img id="output" width="200px" height="200px" /></p>
   </div>
