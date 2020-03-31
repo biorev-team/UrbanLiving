@@ -29,11 +29,11 @@ class HomeController extends Controller
               <h5 class="card-title" style="font-size: 15px;">'.$home->title.'</h5>
                  <br><br>
                  <div class="row">
-                <div class="col-md-3">
-                <a type="button" href="/admin/home/manage/'.$home->id.'" style="font-size: 15px;" class="btn btn-success">Manage</a>
+                <div class="col-md-6">
+                <a type="button" href="/admin/home/manage/'.$home->id.'" class="btn btn-success">Manage</a>
                  </div>
                  <div class="col-md-4">   
-                 <button type ="button" onclick="deleteHome('.$home->id.')" style="font-size: 15px;" class="btn btn-danger">Delete</button>
+                 <button type ="button" onclick="deleteHome('.$home->id.')" class="btn btn-danger delete-confirm">Delete</button>
                 </div>
                 </div>
                 </div>

@@ -15,7 +15,7 @@
     }
 
     .w3-bottombar {
-      width: 500px
+      width: 400px;
     }
 </style>
 </head>
@@ -28,7 +28,7 @@
 <div class="col-md-6">
 <h4 style="color: black;"><strong>Home Detail</strong></h4>
 </div>
-</div>
+</div><hr>
 <br>
 <div class="w3-row">
     <a href="javascript:void(0)" class="tablinks active" onclick="openCity(event, 'homes');">

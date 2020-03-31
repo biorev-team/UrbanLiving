@@ -192,35 +192,35 @@
           
               <li class="nav-item">
                 <a href="/admin" class="nav-link">
-                <i class="fa fa-fire"></i><span><p>Dashboard</p></span>
+                <i class="fa fa-fire"></i>&nbsp;&nbsp;<span><p>Dashboard</p></span>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/admin/homes" class="nav-link">
-                <i class="fa fa-home"></i><span><p>Homes</p></span>
+                <i class="fa fa-home"></i>&nbsp;&nbsp;<span><p>Homes</p></span>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="/admin/community" class="nav-link">
-                <i class="fa fa-home"></i><span><p>Communities</p></span>
+                <i class="fa fa-home"></i>&nbsp;&nbsp;<span><p>Communities</p></span>
                 </a>
               </li>
               
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                <i class="fa fa-terminal"></i><span><p>Floor</p></span>
+                <i class="fa fa-terminal"></i>&nbsp;&nbsp;<span><p>Floor</p></span>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="/components" class="nav-link">
-                <i class="fa fa-square"></i><span><p>Components</p></span>
+                <i class="fa fa-square"></i><span>&nbsp;&nbsp;<p>Components</p></span>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/admin/pages" class="nav-link">
-                <i class="fa fa-square"></i><span><p>Page</p></span>
+                <i class="fa fa-square"></i><span>&nbsp;&nbsp;<p>Page</p></span>
                 </a>
               </li>
 

@@ -27,7 +27,7 @@ class CommunityController extends Controller
               <h5 class="card-title" style="font-size: 15px;">'.$community->title.'</h5>
                  <br><br>
                  <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-6">
                 <a type="button" data-toggle="modal" onclick="editcommunity('.$community->id.')" data-target="#exampleModal" style="font-size: 15px;" class="btn btn-success">Edit</a> 
                 </div>
                  <div class="col-md-4">   
