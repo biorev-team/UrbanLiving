@@ -69,6 +69,7 @@ class CommunityController extends Controller
             'state'=>$request['state'],
             'zipcode'=>$request['zipcode'],
         ]);
+        return ['success'=>'Community Successfully Created'];
     }
 
     /**
@@ -116,6 +117,7 @@ class CommunityController extends Controller
             'state'=>$request['state'],
             'zipcode'=>$request['zipcode'],
         ]);
+        return ['success'=>'Community Successfully Edit'];
     }
 
     /**
@@ -128,5 +130,6 @@ class CommunityController extends Controller
     {
         $community = Communities::findOrFail($id);
         $community->delete(); 
+        return ['success'=>'Community Successfully Deleted'];
     }
 }

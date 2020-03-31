@@ -33,7 +33,7 @@ class HomeController extends Controller
                 <a type="button" href="/admin/home/manage/'.$home->id.'" style="font-size: 15px;" class="btn btn-success">Manage</a>
                  </div>
                  <div class="col-md-4">   
-                 <button type ="button" onclick="deleteHome('.$home->id.')" style="font-size: 15px;" class="btn btn-danger">Delete</button>
+                 <button type ="button"  data-id="'.$home->id.'" data-toggle="modal" data-target="#deleteHome"  style="font-size: 15px;" class="btn btn-danger">Delete</button>
                 </div>
                 </div>
                 </div>
@@ -102,8 +102,7 @@ class HomeController extends Controller
             'home_id'=>$home->id,
             'community_id'=>$request['community']
         ]);
-        return ['success'];
-        
+        return ['success'=>'Home Successfully Created'];
     }
 
     /**
@@ -197,8 +196,7 @@ class HomeController extends Controller
             'home_id'=>$home->id,
             'community_id'=>$request['community']
         ]);
-        return ['success'];
-      
+        return ['success'=>'Home Successfully Edit'];
     }
 
     /**
@@ -211,5 +209,6 @@ class HomeController extends Controller
     {  
         $home = Homes::findOrFail($id);
         $home->delete(); 
+        return ['success'=>'Home Successfully Deleted'];
     }
 }

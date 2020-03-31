@@ -197,22 +197,22 @@
   </div>
 </div>
 
- <div class="modal fade bd-example-modal-xl" id="delete" tabindex="-1" role="dialog" aria-labelledby="addNewCommunityTitle" aria-hidden="true">
+ <div class="modal fade bd-example-modal-xl" id="deleteFeature" tabindex="-1" role="dialog" aria-labelledby="addNewCommunityTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5>Confirm Action</h5>
+            <h5>Delete Confirm Action</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"><i class="fa fa-times"></i></span>
             </button>
           </div>
           <div class="modal-body">
             <div class="row">
-              <h6 class="delete_heading">Are you sure, you want to delete this Estimate ?</h6>
+              <h6 class="delete_heading">Are you sure, you want to delete this Feature ?</h6>
               <div class="clearfix"></div>
               <div class="m-auto">
-                <button type="button" data-dismiss="modal" class="btn-orange t_b_s d_gr"> No </button>
-                <button type="submit" onclick="deleteFeature({{$feature->id}})" class="btn-orange t_b_s"> Yes</button>
+                <button type="button" data-dismiss="modal" class="btn btn-primary"> No </button>
+                <button type="submit" id="ys-btn" class="btn btn-danger"> Yes</button>
                </div>  
               </div>    
             </div>
@@ -222,7 +222,17 @@
 
 <script>
 // Tabs
+$('#deleteFeature').on('show.bs.modal', function (e) {
+    var $trigger = $(e.relatedTarget);
+    var id=$trigger.data('id');
+    $('#ys-btn').click(function()
+    {
+      $('#deleteFeature').modal('hide');
+      $('.modal-backdrop').css('display','none');
+        deleteFeature(id);
 
+    });
+});
 function openCity(evt, cityName) {
   var i, x, tablinks;
   x = document.getElementsByClassName("city");
