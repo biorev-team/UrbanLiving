@@ -38,7 +38,7 @@ class CommonController extends Controller
                                                 <button  onclick="editfeature('.$feature->id.')" style="font-size: 10px;" class="btn btn-success">Edit</button>
                                              </div>
                                             <div class="col-md-6">
-                                                <button  onclick="deleteFeature('.$feature->id.');" style="font-size: 10px;" class="btn btn-danger">Delete</button>
+                                                <button class="btn btn-danger" data-id="'.$feature->id.'" data-toggle="modal" data-target="#deleteFeature"  style="font-size: 10px;" >Delete</button>
                                             </div>
                                         </div>
                                 </div>

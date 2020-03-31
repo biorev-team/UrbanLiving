@@ -352,6 +352,34 @@
     });
 </script>
 @endif
+
+<script>
+  $('#deleteHome').on('show.bs.modal', function (e) {
+
+ var $trigger = $(e.relatedTarget);
+ var id=$trigger.data('id');
+ $('#ys-home-btn').click(function()
+ {
+   $('#deleteHome').modal('hide');
+     deleteHome(id);
+
+ });
+});
+
+$('#deleteCommunity').on('show.bs.modal', function (e) {
+
+var $trigger = $(e.relatedTarget);
+var id=$trigger.data('id');
+$('#ys-comm-btn').click(function()
+{
+  $('#deleteCommunity').modal('hide');
+  $('.modal-backdrop').css('display','none');
+    deleteCommunity(id);
+
+});
+});
+</script>
+
 @if(Route::currentRouteName() == 'edit-home' )
 <script>
 $(document).ready(function() {
@@ -374,6 +402,7 @@ $(document).ready(function() {
         document.getElementById("builder").value = result.builder;
         document.getElementById("meta_title").value = result.meta_title;
         document.getElementById("meta_description").value = result.meta_description;
+        document.getElementById("file").value = result.featured_image;
       }
       
     }); 
@@ -495,6 +524,7 @@ $(document).ready(function() {
                     'featured-image-name' : image_name,
                   },
                   success: function ( ) {
+                    window.location.href = "/admin/homes";
                   }
                 });
 

@@ -31,7 +31,7 @@ class CommunityController extends Controller
                 <a type="button" data-toggle="modal" onclick="editcommunity('.$community->id.')" data-target="#exampleModal" style="font-size: 15px;" class="btn btn-success">Edit</a> 
                 </div>
                  <div class="col-md-4">   
-                 <button type ="button" onclick="deleteCommunity('.$community->id.')" style="font-size: 15px;" class="btn btn-danger">Delete</button>
+                 <button type ="button" data-id="'.$community->id.'" data-toggle="modal" data-target="#deleteCommunity"   style="font-size: 15px;" class="btn btn-danger">Delete</button>
                 </div>
                 </div>
                 </div>
@@ -69,6 +69,7 @@ class CommunityController extends Controller
             'state'=>$request['state'],
             'zipcode'=>$request['zipcode'],
         ]);
+        return ['success'=>'Community Successfully Created'];
     }
 
     /**
@@ -116,6 +117,7 @@ class CommunityController extends Controller
             'state'=>$request['state'],
             'zipcode'=>$request['zipcode'],
         ]);
+        return ['success'=>'Community Successfully Edit'];
     }
 
     /**
@@ -128,5 +130,6 @@ class CommunityController extends Controller
     {
         $community = Communities::findOrFail($id);
         $community->delete(); 
+        return ['success'=>'Community Successfully Deleted'];
     }
 }

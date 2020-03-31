@@ -9,3 +9,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+public/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2
+public/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff
+*.ttf
